@@ -1,30 +1,21 @@
-import csv
+"""
+Данная программа создаёт новый файл vacancy_new.csv в котором записаны все професси по возрастанию ЗП
+Затем она выводит первые 3 профессии с наибольшей ЗП
+"""
 
-# def get_max_salary_in_company(vc_list):
-#     vc_list.sort(key=lambda x: x[0], reverse=True)
-#     return vc_list[0]
-#
-#
-# def get_max_salaries(vc_list):
-#     pre_vc = ""
-#     new_vc_list = [vc_list[0]]
-#     max_salaries = list()
-#     for vc in vc_list:
-#         if vc[4] == pre_vc:
-#             new_vc_list.append(vc)
-#         else:
-#             max_salaries.append(get_max_salary_in_company(new_vc_list))
-#             new_vc_list = [vc]
-#     return max_salaries
+
+import csv
 
 
 with open("vacancy.csv", encoding="UTF-8", mode="r") as infile:
     csv_reader = csv.reader(infile, delimiter=";")
     vac_list = list(csv_reader)
     vac_list.pop(0)
+
+    # Сортировка по ЗП
     vac_list.sort(key=lambda x: x[0], reverse=True)
-    # new_val_list = get_max_salaries(vac_list)
-    # print(new_val_list)
+
+    # Записываем в новый файл
     with open("vacancy_new.csv", encoding="UTF-8", mode="w") as outfile:
         csv_writer = csv.writer(outfile, delimiter=";")
         row = ["Company", "Role", "Salary"]
@@ -33,5 +24,6 @@ with open("vacancy.csv", encoding="UTF-8", mode="r") as infile:
             row = [vac[4], vac[3], vac[0]]
             csv_writer.writerow(row)
 
+    # Выводим 3 самых больших элемента
     for vac in vac_list[0:3]:
         print(f"{vac[4]} - {vac[3]} - {vac[0]}")
